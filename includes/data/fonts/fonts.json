@@ -11763,6 +11763,41 @@
     }
   },
   {
+    "family": "Datatype",
+    "fallbacks": ["monospace"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 976,
+      "wDes": 251,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -251,
+      "yMax": 976,
+      "hAsc": 1000,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
     "family": "David Libre",
     "fallbacks": ["serif"],
     "weights": [400, 500, 700],
@@ -20545,6 +20580,74 @@
       "yMax": 2234,
       "hAsc": 1984,
       "hDes": -494,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Iosevka Charon",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 700],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1015,
+      "des": -265,
+      "tAsc": 1015,
+      "tDes": -265,
+      "tLGap": 0,
+      "wAsc": 1198,
+      "wDes": 604,
+      "xH": 520,
+      "capH": 735,
+      "yMin": -597,
+      "yMax": 1190,
+      "hAsc": 1015,
+      "hDes": -265,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Iosevka Charon Mono",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 700],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1015,
+      "des": -265,
+      "tAsc": 1015,
+      "tDes": -265,
+      "tLGap": 0,
+      "wAsc": 1198,
+      "wDes": 604,
+      "xH": 520,
+      "capH": 735,
+      "yMin": -597,
+      "yMax": 1190,
+      "hAsc": 1015,
+      "hDes": -265,
       "lGap": 0
     }
   },
