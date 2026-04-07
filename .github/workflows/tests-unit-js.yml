@@ -51,7 +51,7 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -70,13 +70,13 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Setup Node
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ env.NVMRC }}-jest
@@ -103,7 +103,7 @@ jobs:
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2
         with:
           files: build/logs/lcov.info
           flags: unittests

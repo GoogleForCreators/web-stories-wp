@@ -83,7 +83,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -104,13 +104,13 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Setup Node
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Bundle size check
-        uses: preactjs/compressed-size-action@8518045ed95e94e971b83333085e1cb99aa18aa8
+        uses: preactjs/compressed-size-action@66325aad6443cb7cf89c4bfcd414aea2367cda94
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '{assets/js/*.js,assets/css/*.css}'
