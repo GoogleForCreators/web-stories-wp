@@ -159,7 +159,7 @@
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.80.0",
     "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-delete": "^3.0.2",
     "rollup-plugin-web-worker-loader": "^1.7.0",
     "rtlcss-webpack-plugin": "^4.0.7",
     "source-map-loader": "^5.0.0",
