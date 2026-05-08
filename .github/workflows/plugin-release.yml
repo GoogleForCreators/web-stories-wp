@@ -172,7 +172,7 @@ jobs:
       - name: Prepare assets for RC
         if: ${{ contains(github.event.inputs.version, 'rc') && ! startsWith(github.ref, 'refs/heads/release/') }}
         run: |
-          LATEST_ASSETS_VERSION=$(gsutil ls gs://web-stories-wp-cdn-assets/ | sed 's/gs:\/\/web-stories-wp-cdn-assets\///' | sed 's/\///' | sort -n | tail -1)
+          LATEST_ASSETS_VERSION=$(gcloud storage ls gs://web-stories-wp-cdn-assets/ | sed 's/gs:\/\/web-stories-wp-cdn-assets\///' | sed 's/\///' | sort -n | tail -1)
           NEW_ASSETS_VERSION=$LATEST_ASSETS_VERSION
 
           NUMBER_OF_NEW_ASSETS=$(ls main | wc -l)
@@ -185,10 +185,10 @@ jobs:
 
             echo "Copying existing assets over to new version."
 
-            gsutil -m rsync -r gs://web-stories-wp-cdn-assets/$LATEST_ASSETS_VERSION gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+            gcloud storage rsync -r gs://web-stories-wp-cdn-assets/$LATEST_ASSETS_VERSION gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
 
             echo "Uploading new assets to new version."
-            gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+            gcloud storage rsync main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION --recursive --ignore-symlinks --exclude="(^|/)\."
 
             rm -rf main/*
 
