@@ -43,6 +43,7 @@
     "no-undefined": "off",
     "no-unused-expressions": "off",
     "no-unused-vars": "off",
+    "no-use-before-define": "off",
     "no-useless-return": "off",
     "no-void": ["error", { "allowAsStatement": true }],
     "no-warning-comments": "off",
