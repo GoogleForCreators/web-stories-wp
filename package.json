@@ -116,7 +116,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-n": "^17.23.1",
-    "eslint-plugin-oxlint": "^1.48.0",
+    "eslint-plugin-oxlint": "^1.58.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
