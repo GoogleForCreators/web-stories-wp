@@ -111,13 +111,21 @@ jobs:
           node-version-file: '.nvmrc'
           cache: npm
 
-      # TODO: Remove need for `npm install puppeteer`.
+      - name: Cache Puppeteer browsers
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+        with:
+          path: ~/.cache/puppeteer
+          key: ${{ runner.os }}-puppeteer-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-puppeteer-
+
       - name: Install dependencies
-        run: |
-          npm ci
-          npm install puppeteer
+        run: npm ci
         env:
-          PUPPETEER_PRODUCT: chrome
+          PUPPETEER_SKIP_DOWNLOAD: true
+
+      - name: Install Chrome
+        run: npx puppeteer browsers install chrome
 
       # See https://issues.chromium.org/issues/373753919
       # and https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
