@@ -59,6 +59,7 @@ jobs:
             fonts.googleapis.com:443
             fonts.gstatic.com:443
             github.com:443
+            googlechromelabs.github.io:443
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
