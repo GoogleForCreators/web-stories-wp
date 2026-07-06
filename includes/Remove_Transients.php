@@ -62,6 +62,11 @@ class Remove_Transients implements Service, PluginUninstallAware {
 			]
 		);
 
+		/**
+		 * Site IDs.
+		 *
+		 * @var int $site_id
+		 */
 		foreach ( $site_ids as $site_id ) {
 			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 			switch_to_blog( $site_id );

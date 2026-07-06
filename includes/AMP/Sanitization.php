@@ -142,7 +142,7 @@ class Sanitization {
 		/**
 		 * Link elements.
 		 *
-		 * @var array{preconnect: \DOMElement[]|null,dns-prefetch: \DOMElement[]|null,preload: \DOMElement[]|null, prerender: \DOMElement[]|null, prefetch: \DOMElement[]|null }
+		 * @var array{preconnect?: \DOMElement[]|null,dns-prefetch?: \DOMElement[]|null,preload?: \DOMElement[]|null, prerender?: \DOMElement[]|null, prefetch?: \DOMElement[]|null }
 		 */
 		$links = [
 			Attribute::REL_PRECONNECT => [
@@ -250,10 +250,6 @@ class Sanitization {
 		 */
 		$amp_script_handles = array_keys( $amp_scripts );
 		foreach ( array_intersect( Amp::RENDER_DELAYING_EXTENSIONS, $amp_script_handles ) as $script_handle ) {
-			if ( ! \in_array( $script_handle, Amp::RENDER_DELAYING_EXTENSIONS, true ) ) {
-				continue;
-			}
-
 			/**
 			 * AMP script element.
 			 *
@@ -311,11 +307,9 @@ class Sanitization {
 			unset( $amp_scripts[ Amp::RUNTIME ] );
 		} else {
 			$script = $document->createElement( Tag::SCRIPT );
-			if ( $script ) {
-				$script->setAttribute( Attribute::ASYNC, '' );
-				$script->setAttribute( Attribute::SRC, $runtime_src );
-				$ordered_scripts[ Amp::RUNTIME ] = $script;
-			}
+			$script->setAttribute( Attribute::ASYNC, '' );
+			$script->setAttribute( Attribute::SRC, $runtime_src );
+			$ordered_scripts[ Amp::RUNTIME ] = $script;
 		}
 
 		/*

@@ -94,6 +94,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		parent::register_routes();
 
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->parent_base . '/(?P<id>[\d]+)/' . $this->rest_base,
 			[

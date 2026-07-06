@@ -259,6 +259,7 @@ class Web_Stories_Block extends Embed_Base {
 		// to enqueue these assets only when needed.
 		register_block_type_from_metadata(
 			$base_path,
+			// @phpstan-ignore argument.type
 			[
 				'attributes'      => [
 					'blockType'        => [
@@ -332,6 +333,8 @@ class Web_Stories_Block extends Embed_Base {
 					],
 				],
 				'render_callback' => [ $this, 'render_block' ],
+				// WP 6.1 deprecated editor_script and editor_style in favor of
+				// editor_script_handles and editor_style_handles.
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::SCRIPT_HANDLE,
 			]

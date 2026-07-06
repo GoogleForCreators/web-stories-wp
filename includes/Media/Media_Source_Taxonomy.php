@@ -316,6 +316,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			return;
 		}
 
+		/**
+		 * Term slugs list.
+		 *
+		 * @var string[] $existing_terms
+		 */
+
 		$missing_terms = array_diff( $this->get_all_terms(), $existing_terms );
 
 		foreach ( $missing_terms as $term ) {
@@ -334,7 +340,9 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 */
 	protected function taxonomy_args(): array {
 		return [
-			'label'                 => __( 'Source', 'web-stories' ),
+			'labels'                => [
+				'name' => __( 'Source', 'web-stories' ),
+			],
 			'public'                => false,
 			'rewrite'               => false,
 			'hierarchical'          => false,

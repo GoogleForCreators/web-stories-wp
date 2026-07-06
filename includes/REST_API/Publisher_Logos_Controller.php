@@ -96,6 +96,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 */
 	public function register_routes(): void {
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->rest_base,
 			[
@@ -115,6 +116,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		);
 
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			[

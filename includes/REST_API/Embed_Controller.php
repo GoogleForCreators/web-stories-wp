@@ -101,6 +101,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function register_routes(): void {
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->rest_base,
 			[

@@ -216,8 +216,12 @@ class Settings extends Service_Base implements PluginUninstallAware {
 				'description'  => __( 'Ad Network', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
-				'enum'         => [ 'none', 'adsense', 'admanager', 'mgid' ],
-				'show_in_rest' => true,
+				'show_in_rest' => [
+					'schema' => [
+						'type' => 'string',
+						'enum' => [ 'none', 'adsense', 'admanager', 'mgid' ],
+					],
+				],
 			]
 		);
 
@@ -280,19 +284,16 @@ class Settings extends Service_Base implements PluginUninstallAware {
 			self::SETTING_GROUP,
 			self::SETTING_NAME_PUBLISHER_LOGOS,
 			[
-				'description'     => __( 'Publisher Logos', 'web-stories' ),
-				'type'            => 'array',
-				'default'         => [],
-				'show_in_rest'    => [
+				'description'  => __( 'Publisher Logos', 'web-stories' ),
+				'type'         => 'array',
+				'default'      => [],
+				'show_in_rest' => [
 					'schema' => [
 						'items' => [
 							'type' => 'integer',
 						],
 					],
 				],
-				// WPGraphQL errors when encountering array or object types.
-				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
-				'show_in_graphql' => false,
 			]
 		);
 
@@ -370,8 +371,12 @@ class Settings extends Service_Base implements PluginUninstallAware {
 				'description'  => __( 'Shopping provider', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
-				'enum'         => $vendor_options,
-				'show_in_rest' => true,
+				'show_in_rest' => [
+					'schema' => [
+						'type' => 'string',
+						'enum' => $vendor_options,
+					],
+				],
 			]
 		);
 
