@@ -58,7 +58,12 @@ use WP_Term_Query;
  *   show_admin_column?: bool,
  *   meta_box_cb?: bool|callable,
  *   meta_box_sanitize_cb?: callable,
- *   capabilities?: string[],
+ *   capabilities?: array{
+ *     manage_terms?: string,
+ *     edit_terms?: string,
+ *     delete_terms?: string,
+ *     assign_terms?: string
+ *   },
  *   rewrite?: bool|array{
  *     slug?: string,
  *     with_front?: bool,

@@ -381,7 +381,7 @@ final class SimpleInjector implements Injector {
 		 */
 		$type = $type instanceof ReflectionNamedType
 			? $type->getName()
-			: (string) $type;
+			: (string) $type; // @phpstan-ignore class.toStringDeprecated (Undeprecated in 8.0)
 
 		return $this->make_dependency( $injection_chain, $type );
 	}

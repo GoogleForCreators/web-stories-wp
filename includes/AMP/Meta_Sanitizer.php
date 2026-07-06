@@ -68,17 +68,13 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 
 		if ( ! $style ) {
 			$style = $this->dom->createElement( Tag::STYLE );
-			if ( $style ) {
-				$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
-				$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[0] ) );
-			}
+			$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
+			$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[0] ) );
 		} elseif ( $style->parentNode ) {
 			$style->parentNode->removeChild( $style ); // So we can move it.
 		}
-		if ( $style ) {
-			// @phpstan-ignore argument.type
-			$this->dom->head->appendChild( $style );
-		}
+		// @phpstan-ignore argument.type
+		$this->dom->head->appendChild( $style );
 
 		$noscript  = null;
 		$noscripts = $this->dom->xpath->query( './noscript[ style[ @amp-boilerplate ] ]', $this->dom->head );
@@ -90,19 +86,15 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 		if ( ! $noscript ) {
 			$noscript = $this->dom->createElement( Tag::NOSCRIPT );
 			$style    = $this->dom->createElement( Tag::STYLE );
-			if ( $style && $noscript ) {
-				$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
-				$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[1] ) );
-				$noscript->appendChild( $style );
-			}
+			$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
+			$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[1] ) );
+			$noscript->appendChild( $style );
 		} elseif ( $noscript->parentNode ) {
 			$noscript->parentNode->removeChild( $noscript ); // So we can move it.
 		}
 
-		if ( $noscript ) {
-			// @phpstan-ignore argument.type
-			$this->dom->head->appendChild( $noscript );
-		}
+		// @phpstan-ignore argument.type
+		$this->dom->head->appendChild( $noscript );
 	}
 
 	/**

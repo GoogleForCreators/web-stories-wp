@@ -89,7 +89,6 @@ class Sanitization extends DependencyInjectedTestCase {
 		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
 		$this->assertSame( 2, $scripts->length );
 		foreach ( $scripts as $script ) {
-			$this->assertIsObject( $script );
 			$this->assertTrue( property_exists( $script, 'parentNode' ) );
 			$this->assertSame( 'head', $script->parentNode->nodeName );
 

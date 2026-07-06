@@ -442,10 +442,6 @@ trait Sanitization_Utils {
 
 		$style_element = $document->createElement( 'style' );
 
-		if ( ! $style_element ) {
-			return;
-		}
-
 		$document->head->appendChild( $style_element );
 
 		// Create style rule for each inline style and add class name to each element.
@@ -492,10 +488,6 @@ trait Sanitization_Utils {
 		}
 
 		$style_element = $document->createElement( 'style' );
-
-		if ( ! $style_element ) {
-			return;
-		}
 
 		$style_rule = $document->createTextNode( 'amp-story-page:first-of-type .animation-wrapper { --initial-opacity: 1; --initial-transform: none; }' );
 		$style_element->appendChild( $style_rule );

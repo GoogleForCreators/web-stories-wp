@@ -114,7 +114,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 *
-	 * @phpstan-param WP_REST_Request<covariant array{context: string}> $request
+	 * @phpstan-param WP_REST_Request<covariant array{context: string, web_stories_demo?: bool}> $request
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );

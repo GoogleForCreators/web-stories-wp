@@ -60,6 +60,7 @@ use WP_Site;
  *   rest_base?: string,
  *   rest_namespace?: string,
  *   rest_controller_class?: string,
+ *   autosave_rest_controller_class?: string,
  *   menu_position?: int,
  *   menu_icon?: string,
  *   capability_type?: string|array{0: string, 1: string},
@@ -190,7 +191,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return string REST base.
+	 * @return non-falsy-string REST base.
 	 */
 	public function get_rest_namespace(): string {
 		$post_type_object = $this->get_object();
@@ -198,6 +199,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 			$post_type_object->rest_namespace :
 			self::REST_NAMESPACE;
 
+		// @phpstan-ignore return.type
 		return (string) $rest_namespace;
 	}
 
@@ -359,7 +361,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.26.0
 	 */
 	public function on_plugin_uninstall(): void {
-        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 		$cpt_posts = get_posts(
 			[
 				'fields'           => 'ids',
@@ -370,6 +372,11 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 			]
 		);
 
+		/**
+		 * Post IDs.
+		 *
+		 * @var int|string $post_id
+		 */
 		foreach ( $cpt_posts as $post_id ) {
 			wp_delete_post( (int) $post_id, true );
 		}

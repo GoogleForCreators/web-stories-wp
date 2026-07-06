@@ -18,10 +18,6 @@ parameters:
     -
       identifier: missingType.generics
     -
-      identifier: requireOnce.fileNotFound
-    -
-      identifier: require.fileNotFound
-    -
       identifier: staticMethod.internalClass
       path: tests/phpunit/unit/tests
     -

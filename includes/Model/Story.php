@@ -411,6 +411,7 @@ class Story {
 		 *     @type int    $2 Image height in pixels.
 		 * }
 		 * @param int|null $id   Story ID if available.
+		 * @phpstan-param array{0: int, 1: int}|array{} $size
 		 */
 		return apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
 	}

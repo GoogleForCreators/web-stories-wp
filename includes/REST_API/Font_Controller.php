@@ -81,6 +81,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function register_routes(): void {
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->rest_base,
 			[
@@ -101,6 +102,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		);
 
 		register_rest_route(
+			// @phpstan-ignore argument.type
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			[

@@ -83,17 +83,13 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 		if ( ! $rel_canonical instanceof DOMElement ) {
 			$rel_canonical = $this->dom->createElement( Tag::LINK );
 
-			if ( $rel_canonical instanceof DOMElement ) {
-				$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
-				$this->dom->head->appendChild( $rel_canonical );
-			}
+			$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
+			$this->dom->head->appendChild( $rel_canonical );
 		}
 
-		if ( $rel_canonical instanceof DOMElement ) {
-			// Ensure link[rel=canonical] has a non-empty href attribute.
-			if ( empty( $rel_canonical->getAttribute( Attribute::HREF ) ) ) {
-				$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
-			}
+		// Ensure link[rel=canonical] has a non-empty href attribute.
+		if ( empty( $rel_canonical->getAttribute( Attribute::HREF ) ) ) {
+			$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
 		}
 	}
 }
