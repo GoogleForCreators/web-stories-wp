@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "092f234cd73d8b5a6a950d6df8f33371",
+    "content-hash": "4e50f5110c80be7ef0f62c6b94f13769",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -339,32 +339,32 @@
         },
         {
             "name": "mcaskill/composer-exclude-files",
-            "version": "v4.0.1",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
-                "reference": "ed68fc7d6da2146ed2c32c92904587c9e03c985a"
+                "reference": "770783e858d72a54f2c8d78e1243dd2f3e52a8ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/ed68fc7d6da2146ed2c32c92904587c9e03c985a",
-                "reference": "ed68fc7d6da2146ed2c32c92904587c9e03c985a",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/770783e858d72a54f2c8d78e1243dd2f3e52a8ac",
+                "reference": "770783e858d72a54f2c8d78e1243dd2f3e52a8ac",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^2.3",
+                "composer-plugin-api": "^2.9",
                 "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "composer/composer": "^2.3",
-                "phpstan/phpstan": "^1.11",
-                "symfony/phpunit-bridge": "^7.1"
+                "composer/composer": "^2.9",
+                "phpstan/phpstan": "^1.12",
+                "symfony/phpunit-bridge": "^7.3"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "McAskill\\Composer\\ExcludeFilePlugin",
                 "branch-alias": {
-                    "dev-main": "4.x-dev"
+                    "dev-main": "5.x-dev"
                 }
             },
             "autoload": {
@@ -385,9 +385,9 @@
             "description": "Exclude files from autoload_files.php",
             "support": {
                 "issues": "https://github.com/mcaskill/composer-plugin-exclude-files/issues",
-                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v4.0.1"
+                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/5.0.0"
             },
-            "time": "2024-12-03T21:08:26+00:00"
+            "time": "2026-06-18T15:24:40+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -6084,22 +6084,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.9.1",
+            "version": "7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "94867711087d0efc3d361dbe068044e0124f4c0b"
+                "reference": "2fdc99120ea9a426e49cf57ee4b7481e03c720d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/94867711087d0efc3d361dbe068044e0124f4c0b",
-                "reference": "94867711087d0efc3d361dbe068044e0124f4c0b",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/2fdc99120ea9a426e49cf57ee4b7481e03c720d4",
+                "reference": "2fdc99120ea9a426e49cf57ee4b7481e03c720d4",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.9.1",
+                "php-stubs/wordpress-stubs": "7.0.0",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -6125,9 +6125,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.9.1"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/7.0.0"
             },
-            "time": "2026-02-04T00:34:47+00:00"
+            "time": "2026-06-05T09:59:55+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

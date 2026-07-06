@@ -14,7 +14,7 @@
     "ampproject/amp-toolbox": "*",
     "ampproject/amp-wp": "dev-develop",
     "enshrined/svg-sanitize": "^0.22.0",
-    "mcaskill/composer-exclude-files": "^4.0",
+    "mcaskill/composer-exclude-files": "^5.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {
@@ -32,7 +32,7 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
-    "sniccowp/php-scoper-wordpress-excludes": "^6.0",
+    "sniccowp/php-scoper-wordpress-excludes": "^7.0",
     "swissspidy/phpstan-no-private": "^1.0.0",
     "szepeviktor/phpstan-wordpress": "^2.0.0",
     "wp-coding-standards/wpcs": "^3.0.0",
