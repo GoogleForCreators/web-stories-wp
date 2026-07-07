@@ -47,7 +47,6 @@ const MIN_SIZE = 20;
 function StoryEmbedEditInLoop({
   attributes,
   setAttributes,
-  className,
   isSelected,
   context = {},
 }) {
@@ -137,10 +136,8 @@ function StoryEmbedEditInLoop({
   const minHeight = height < width ? MIN_SIZE : MIN_SIZE / ratio;
 
   const previewClassName = classNames(
-    className,
     { 'web-stories-embed': !previewOnly },
-    { 'web-stories-singleton': previewOnly },
-    `align${align || 'none'}`
+    { 'web-stories-singleton': previewOnly }
   );
 
   if (!isResizable) {
@@ -265,7 +262,6 @@ StoryEmbedEditInLoop.propTypes = {
     previewOnly: PropTypes.bool,
   }),
   setAttributes: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   context: PropTypes.shape({
     postType: PropTypes.string,

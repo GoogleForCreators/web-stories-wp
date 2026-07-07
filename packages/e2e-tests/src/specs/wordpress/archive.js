@@ -127,11 +127,17 @@ describe('Stories Archive', () => {
           showWelcomeGuide: false,
         });
         await insertBlock();
-        await page.waitForSelector('.web-stories-block-configuration-panel');
 
-        await expect(page).toClick('button', { text: 'Latest Stories' });
-        await expect(page).toClick('button', { text: 'Box Carousel' });
-        await expect(page).not.toMatchElement('label', {
+        await page.waitForSelector("iframe[title='Editor canvas']");
+        const frameHandle = await page.$("iframe[title='Editor canvas']");
+        const frame = await frameHandle.contentFrame();
+        expect(frame).not.toBeNull();
+
+        await frame.waitForSelector('.web-stories-block-configuration-panel');
+
+        await expect(frame).toClick('button', { text: 'Latest Stories' });
+        await expect(frame).toClick('button', { text: 'Box Carousel' });
+        await expect(frame).not.toMatchElement('label', {
           text: 'Display Archive Link',
         });
       });

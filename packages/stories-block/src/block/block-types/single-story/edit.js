@@ -50,7 +50,6 @@ const MIN_SIZE = 20;
 function StoryEmbedEdit({
   attributes,
   setAttributes,
-  className,
   isSelected,
   context = {},
 }) {
@@ -271,7 +270,7 @@ function StoryEmbedEdit({
           maxHeight={Math.ceil(maxWidth / ratio)}
           previewOnly={previewOnly}
         />
-        <div className={`${className} web-stories-embed align${align}`}>
+        <div className="web-stories-embed">
           {previewOnly ? (
             <Singleton
               title={title}
@@ -321,7 +320,7 @@ function StoryEmbedEdit({
         maxHeight={Math.ceil(maxWidth / ratio)}
         previewOnly={previewOnly}
       />
-      <div className={`${className} web-stories-embed align${align}`}>
+      <div className="web-stories-embed">
         <ResizableBox
           className={isSelected ? 'show-resize-handle' : 'hide-resize-handle'}
           size={{
@@ -384,7 +383,6 @@ StoryEmbedEdit.propTypes = {
     previewOnly: PropTypes.bool,
   }),
   setAttributes: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   context: PropTypes.shape({
     postType: PropTypes.string,

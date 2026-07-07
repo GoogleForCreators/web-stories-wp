@@ -64,14 +64,19 @@ describe('Web Stories Block', () => {
     });
     await insertBlock();
 
-    await page.waitForSelector('.web-stories-block-configuration-panel');
+    await page.waitForSelector("iframe[title='Editor canvas']");
+    const frameHandle = await page.$("iframe[title='Editor canvas']");
+    const frame = await frameHandle.contentFrame();
+    expect(frame).not.toBeNull();
 
-    await expect(page).toClick('button', { text: 'Single Story' });
+    await frame.waitForSelector('.web-stories-block-configuration-panel');
 
-    await expect(page).toMatchTextContent(
+    await expect(frame).toClick('button', { text: 'Single Story' });
+
+    await expect(frame).toMatchTextContent(
       'Select an existing story from your site, or add one with a URL.'
     );
-    await expect(page).toClick('button', { text: 'Insert from URL' });
+    await expect(frame).toClick('button', { text: 'Insert from URL' });
 
     await page.type(
       'input[aria-label="Story URL"]',
@@ -79,13 +84,13 @@ describe('Web Stories Block', () => {
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 
-    await expect(page).not.toMatchTextContent(
+    await expect(frame).not.toMatchTextContent(
       'Sorry, this content could not be embedded.'
     );
 
     // Wait a little longer for embed REST API request to come back.
-    await page.waitForSelector('amp-story-player');
-    await expect(page).toMatchElement('amp-story-player');
+    await frame.waitForSelector('amp-story-player');
+    await expect(frame).toMatchElement('amp-story-player');
     await expect(page).toMatchTextContent('Embed Settings');
   });
 
@@ -95,18 +100,23 @@ describe('Web Stories Block', () => {
     });
     await insertBlock();
 
-    await page.waitForSelector('.web-stories-block-configuration-panel');
+    await page.waitForSelector("iframe[title='Editor canvas']");
+    const frameHandle = await page.$("iframe[title='Editor canvas']");
+    const frame = await frameHandle.contentFrame();
+    expect(frame).not.toBeNull();
 
-    await expect(page).toClick('button', { text: 'Selected Stories' });
+    await frame.waitForSelector('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('button', { text: 'Box Carousel' });
+    await expect(frame).toClick('button', { text: 'Selected Stories' });
 
-    await expect(page).toClick('button', { text: 'Select Stories' });
+    await expect(frame).toClick('button', { text: 'Box Carousel' });
+
+    await expect(frame).toClick('button', { text: 'Select Stories' });
 
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
 
-    await page.waitForFunction(
+    await frame.waitForFunction(
       () => !document.querySelector('.components-spinner')
     );
 

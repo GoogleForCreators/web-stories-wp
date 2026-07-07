@@ -1,4 +1,5 @@
 {
+  "apiVersion": 3,
   "name": "web-stories/embed",
   "title": "Web Stories",
   "description": "Embed Web Stories.",
