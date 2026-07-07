@@ -80,7 +80,6 @@ describe('EditLayerFocusManager', () => {
   }
 
   function blurActiveElement() {
-    // eslint-disable-next-line testing-library/no-node-access
     document.activeElement.blur();
   }
 
