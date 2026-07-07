@@ -91,7 +91,7 @@ describe('Web Stories Block', () => {
     // Wait a little longer for embed REST API request to come back.
     await frame.waitForSelector('amp-story-player');
     await expect(frame).toMatchElement('amp-story-player');
-    await expect(frame).toMatchTextContent('Embed Settings');
+    await expect(page).toMatchTextContent('Embed Settings');
   });
 
   it('should insert a new web stories block and select story', async () => {
