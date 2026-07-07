@@ -78,11 +78,11 @@ describe('Web Stories Block', () => {
     );
     await expect(frame).toClick('button', { text: 'Insert from URL' });
 
-    await frame.type(
+    await page.type(
       'input[aria-label="Story URL"]',
       'https://wp.stories.google/stories/intro-to-web-stories-storytime/'
     );
-    await expect(frame).toClick('button[aria-label="Embed"]');
+    await expect(page).toClick('button[aria-label="Embed"]');
 
     await expect(frame).not.toMatchTextContent(
       'Sorry, this content could not be embedded.'
@@ -113,8 +113,8 @@ describe('Web Stories Block', () => {
 
     await expect(frame).toClick('button', { text: 'Select Stories' });
 
-    await frame.waitForSelector('.components-modal__screen-overlay');
-    await expect(frame).toMatchElement('.components-modal__screen-overlay');
+    await page.waitForSelector('.components-modal__screen-overlay');
+    await expect(page).toMatchElement('.components-modal__screen-overlay');
 
     await frame.waitForFunction(
       () => !document.querySelector('.components-spinner')
