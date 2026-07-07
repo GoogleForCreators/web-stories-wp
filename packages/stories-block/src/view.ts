@@ -65,14 +65,16 @@ function runWithViewTransition(f: () => void) {
   }
 }
 
+const initialState: State = {
+  lightboxElement: null,
+  player: null,
+  stories: [],
+  instanceId: null,
+  currentLocation: null,
+};
+
 const { state, actions } = store('web-stories-block', {
-  state: {
-    lightboxElement: null,
-    player: null,
-    stories: [],
-    instanceId: null,
-    currentLocation: null,
-  } as State,
+  state: initialState,
   actions: {
     storyContentReady: (
       storyObject: StoryDef,

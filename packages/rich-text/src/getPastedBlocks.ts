@@ -52,11 +52,12 @@ type ConvertFromHTMLReturn = {
   entityMap: Record<string, unknown>;
 };
 function getPastedBlocks(html: string, existingStyles: string[] = []) {
-  const { contentBlocks, entityMap } = convertFromHTML(
+  const converted: ConvertFromHTMLReturn = convertFromHTML(
     html,
     undefined /* This has to be undefined to trigger default argument */,
     RENDER_MAP
-  ) as ConvertFromHTMLReturn;
+  );
+  const { contentBlocks, entityMap } = converted;
   const pastedContentState = ContentState.createFromBlockArray(
     contentBlocks,
     entityMap

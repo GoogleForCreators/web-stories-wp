@@ -97,7 +97,7 @@ async function loadTemplate(
   return {
     ...(migrate(template, template.version) as unknown as Template),
     version: DATA_VERSION,
-  } as Template;
+  };
 }
 
 async function getTemplates(imageBaseUrl: string) {
