@@ -47,7 +47,7 @@ const MIN_SIZE = 20;
 function StoryEmbedEditInLoop({
   attributes,
   setAttributes,
-  className,
+  className = '',
   isSelected,
   context = {},
 }) {

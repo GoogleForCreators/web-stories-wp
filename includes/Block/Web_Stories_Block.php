@@ -261,6 +261,7 @@ class Web_Stories_Block extends Embed_Base {
 			$base_path,
 			// @phpstan-ignore argument.type
 			[
+				'api_version'     => 3,
 				'attributes'      => [
 					'blockType'        => [
 						'type' => 'string',

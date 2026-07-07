@@ -50,7 +50,7 @@ const MIN_SIZE = 20;
 function StoryEmbedEdit({
   attributes,
   setAttributes,
-  className,
+  className = '',
   isSelected,
   context = {},
 }) {

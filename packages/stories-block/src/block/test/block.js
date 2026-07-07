@@ -22,11 +22,11 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { name, settings } from '..';
+import { metadata, settings } from '..';
 
 describe('Block Registration', () => {
   it('should register Web Stories block without errors', () => {
-    const block = registerBlockType(name, settings);
+    const block = registerBlockType(metadata, settings);
     expect(block).toBeDefined();
   });
 });

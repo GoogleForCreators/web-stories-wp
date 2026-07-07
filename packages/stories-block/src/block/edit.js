@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -45,10 +46,11 @@ import {
 function WebStoriesEdit({
   attributes,
   setAttributes,
-  className,
+  className = '',
   isSelected,
   context,
 }) {
+  const blockProps = useBlockProps();
   const { blockType, viewType } = attributes;
   const { postType, postId, queryId } = context;
 
@@ -61,46 +63,52 @@ function WebStoriesEdit({
     'web-story' === postType
   ) {
     return (
-      <SingleStoryEmbedInLoop
-        icon={<BlockIcon />}
-        attributes={attributes}
-        setAttributes={setAttributes}
-        context={context}
-        className={className}
-        isSelected={isSelected}
-      />
+      <div {...blockProps}>
+        <SingleStoryEmbedInLoop
+          icon={<BlockIcon />}
+          attributes={attributes}
+          setAttributes={setAttributes}
+          context={context}
+          className={className}
+          isSelected={isSelected}
+        />
+      </div>
     );
   }
 
   if (!blockType) {
     return (
-      <BlockConfigurationPanel
-        icon={<BlockIcon />}
-        setAttributes={setAttributes}
-        instructions={__(
-          'Embed a collection of your latest stories, select your own or enter an URL.',
-          'web-stories'
-        )}
-        selectionOptions={BLOCK_TYPES}
-        selectionType={'blockType'}
-      />
+      <div {...blockProps}>
+        <BlockConfigurationPanel
+          icon={<BlockIcon />}
+          setAttributes={setAttributes}
+          instructions={__(
+            'Embed a collection of your latest stories, select your own or enter an URL.',
+            'web-stories'
+          )}
+          selectionOptions={BLOCK_TYPES}
+          selectionType={'blockType'}
+        />
+      </div>
     );
   }
 
   if (blockType !== BLOCK_TYPE_URL && !viewType) {
     return (
-      <BlockConfigurationPanel
-        icon={<BlockIcon />}
-        setAttributes={setAttributes}
-        instructions={__('Select a layout style', 'web-stories')}
-        selectionOptions={VIEW_TYPES}
-        selectionType={'viewType'}
-      />
+      <div {...blockProps}>
+        <BlockConfigurationPanel
+          icon={<BlockIcon />}
+          setAttributes={setAttributes}
+          instructions={__('Select a layout style', 'web-stories')}
+          selectionOptions={VIEW_TYPES}
+          selectionType={'viewType'}
+        />
+      </div>
     );
   }
 
   return (
-    <>
+    <div {...blockProps}>
       <StoriesBlockControls
         blockType={blockType}
         viewType={viewType}
@@ -132,7 +140,7 @@ function WebStoriesEdit({
           isSelected={isSelected}
         />
       )}
-    </>
+    </div>
   );
 }
 
