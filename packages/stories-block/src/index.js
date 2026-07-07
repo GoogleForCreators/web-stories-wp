@@ -35,8 +35,8 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { name, settings } from './block';
+import { metadata, settings } from './block';
 
-registerBlockType(name, settings);
+registerBlockType(metadata, settings);
 
 initializeTracking('Embed Block', false);

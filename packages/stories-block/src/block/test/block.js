@@ -22,11 +22,21 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { name, settings } from '..';
+import { metadata, settings } from '..';
 
 describe('Block Registration', () => {
-  it('should register Web Stories block without errors', () => {
-    const block = registerBlockType(name, settings);
+  it('should register Web Stories block without errors and inherit metadata properties', () => {
+    const block = registerBlockType(metadata, settings);
     expect(block).toBeDefined();
+    expect(block.apiVersion).toBe(3);
+    expect(block.name).toBe('web-stories/embed');
+    expect(block.category).toBe('embed');
+    expect(block.usesContext).toStrictEqual(['postId', 'postType', 'queryId']);
+    expect(block.supports).toStrictEqual({
+      align: ['wide', 'full', 'left', 'right', 'center'],
+      interactivity: true,
+    });
+    expect(block.attributes).toBeDefined();
+    expect(block.attributes.url).toBeDefined();
   });
 });

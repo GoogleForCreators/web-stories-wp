@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { useBlockProps } from '@wordpress/block-editor';
+
+/**
  * The block's save function (pure).
  *
  * Represents a cached copy of the block’s content to be shown in case
@@ -32,15 +37,17 @@ import PropTypes from 'prop-types';
  * @param {Object} props.attributes Block attributes.
  * @return {null|*} Rendered block.
  */
-function save({ attributes }) {
-  const { url, title, poster, width, height, align = 'none' } = attributes;
+function save({ attributes = {} } = {}) {
+  const { url, title, poster, width, height } = attributes;
 
   if (!url || !title) {
     return null;
   }
 
+  const blockProps = useBlockProps.save();
+
   return (
-    <div className={`wp-block-web-stories-embed align${align}`}>
+    <div {...blockProps}>
       <a href={url}>
         {poster ? (
           <img

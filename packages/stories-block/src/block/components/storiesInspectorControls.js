@@ -251,6 +251,7 @@ const StoriesInspectorControls = (props) => {
               max={4}
               step={1}
               __nextHasNoMarginBottom
+              __next40pxDefaultSize
             />
           )}
           {CIRCLES_VIEW_TYPE === viewType && (
@@ -264,6 +265,7 @@ const StoriesInspectorControls = (props) => {
               max={200}
               step={5}
               __nextHasNoMarginBottom
+              __next40pxDefaultSize
             />
           )}
         </PanelBody>
@@ -334,6 +336,7 @@ const StoriesInspectorControls = (props) => {
             max={20}
             step={1}
             __nextHasNoMarginBottom
+            __next40pxDefaultSize
           />
         </PanelBody>
       )}

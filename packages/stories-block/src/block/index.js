@@ -30,15 +30,12 @@ import metadata from './block';
 import { BLOCK_TYPE_LATEST_STORIES, GRID_VIEW_TYPE } from './constants';
 import transforms from './transforms';
 
-const { name, category, keywords, attributes, supports } = metadata;
+const { name } = metadata;
 
 const settings = {
   title: __('Web Stories', 'web-stories'),
   description: __('Embed stories using various layout options.', 'web-stories'),
-  category,
   icon: <BlockIcon />,
-  keywords,
-  attributes,
   example: {
     attributes: {
       blockType: BLOCK_TYPE_LATEST_STORIES,
@@ -46,7 +43,6 @@ const settings = {
       numberOfColumns: 2,
     },
   },
-  supports,
   deprecated,
   edit,
   save,

@@ -122,10 +122,15 @@ describe('Publishing Flow', () => {
       () => !document.querySelector('.wp-block-web-stories-embed.is-loading')
     );
 
-    await page.waitForSelector('amp-story-player');
+    await page.waitForSelector("iframe[title='Editor canvas']");
+    const frameHandle = await page.$("iframe[title='Editor canvas']");
+    const frame = await frameHandle.contentFrame();
+    expect(frame).not.toBeNull();
 
-    await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatchTextContent('Publishing Flow Test');
+    await frame.waitForSelector('amp-story-player');
+
+    await expect(frame).toMatchElement('amp-story-player');
+    await expect(frame).toMatchTextContent('Publishing Flow Test');
 
     const postPermalink = await publishPost();
 
