@@ -37,7 +37,7 @@ const ActiveIcon = styled(CheckmarkSmall)`
   transform: translateY(-50%);
 `;
 
-const DefaultListItem = forwardRef(function DefaultListItem(
+const DefaultListItem = forwardRef(function DefaultListItemRender(
   { option, isSelected, ...rest }: DefaultListItemProps,
   ref: ForwardedRef<HTMLLIElement>
 ) {

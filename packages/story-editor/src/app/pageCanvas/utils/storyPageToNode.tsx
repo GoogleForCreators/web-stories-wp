@@ -79,7 +79,7 @@ interface PageWithDepsProps {
   containerHeight: number;
 }
 const PageWithDependencies = forwardRef<HTMLDivElement, PageWithDepsProps>(
-  function PageWithDependencies(
+  function PageWithDependenciesRender(
     {
       page,
       width,
