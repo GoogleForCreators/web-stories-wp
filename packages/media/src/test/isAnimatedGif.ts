@@ -28,7 +28,7 @@ import isAnimatedGif from '../isAnimatedGif';
 describe('isAnimatedGif', () => {
   it('should detect animated GIF', () => {
     const buffer = readFileSync(join(__dirname, '/testUtils/nyancat.gif'));
-    const arrayBuffer = buffer.slice(
+    const arrayBuffer = buffer.buffer.slice(
       buffer.byteOffset,
       buffer.byteOffset + buffer.byteLength
     );
@@ -39,7 +39,7 @@ describe('isAnimatedGif', () => {
 
   it('should not detect non-animated GIF', () => {
     const buffer = readFileSync(join(__dirname, '/testUtils/still.gif'));
-    const arrayBuffer = buffer.slice(
+    const arrayBuffer = buffer.buffer.slice(
       buffer.byteOffset,
       buffer.byteOffset + buffer.byteLength
     );
