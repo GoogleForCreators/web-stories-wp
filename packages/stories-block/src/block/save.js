@@ -38,15 +38,13 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {null|*} Rendered block.
  */
 function save({ attributes = {} } = {}) {
-  const { url, title, poster, width, height, align = 'none' } = attributes;
+  const { url, title, poster, width, height } = attributes;
 
   if (!url || !title) {
     return null;
   }
 
-  const blockProps = useBlockProps.save({
-    className: `wp-block-web-stories-embed align${align}`,
-  });
+  const blockProps = useBlockProps.save();
 
   return (
     <div {...blockProps}>

@@ -46,11 +46,11 @@ describe('save', () => {
     return render(<Save attributes={attributes} />);
   };
 
-  it('should add alignnone class by default', () => {
+  it('should add block wrapper class by default', () => {
     const { container } = renderSave({ url, title, poster });
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="wp-block-web-stories-embed alignnone"
+        class="wp-block-web-stories-embed"
       >
         <a
           href="https://wp.stories.google/stories/intro-to-web-stories-storytime"
@@ -66,11 +66,31 @@ describe('save', () => {
     `);
   });
 
-  it('should render nothing if poster is missing', () => {
+  it('should add alignment class when align attribute is set', () => {
+    const { container } = renderSave({ url, title, poster, align: 'center' });
+    expect(container.firstChild).toMatchInlineSnapshot(`
+      <div
+        class="wp-block-web-stories-embed aligncenter"
+      >
+        <a
+          href="https://wp.stories.google/stories/intro-to-web-stories-storytime"
+        >
+          <img
+            alt="Stories in AMP"
+            decoding="async"
+            loading="lazy"
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
+          />
+        </a>
+      </div>
+    `);
+  });
+
+  it('should render without poster if poster is missing', () => {
     const { container } = renderSave({ url, title });
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="wp-block-web-stories-embed alignnone"
+        class="wp-block-web-stories-embed"
       >
         <a
           href="https://wp.stories.google/stories/intro-to-web-stories-storytime"

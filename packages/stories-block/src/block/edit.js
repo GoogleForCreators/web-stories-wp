@@ -43,13 +43,7 @@ import {
   VIEW_TYPES,
 } from './constants';
 
-function WebStoriesEdit({
-  attributes,
-  setAttributes,
-  className = '',
-  isSelected,
-  context,
-}) {
+function WebStoriesEdit({ attributes, setAttributes, isSelected, context }) {
   const blockProps = useBlockProps();
   const { blockType, viewType } = attributes;
   const { postType, postId, queryId } = context;
@@ -69,7 +63,6 @@ function WebStoriesEdit({
           attributes={attributes}
           setAttributes={setAttributes}
           context={context}
-          className={className}
           isSelected={isSelected}
         />
       </div>
@@ -136,7 +129,6 @@ function WebStoriesEdit({
           icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
-          className={className}
           isSelected={isSelected}
         />
       )}
@@ -163,7 +155,6 @@ WebStoriesEdit.propTypes = {
     authors: PropTypes.array,
   }),
   setAttributes: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   context: PropTypes.shape({
     postType: PropTypes.string,
