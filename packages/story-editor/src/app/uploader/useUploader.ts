@@ -75,7 +75,7 @@ function useUploader() {
   /**
    * Validates a file for upload.
    *
-   * @throws Throws an error if file doesn't meet requirements.
+   * @throws {Error} Throws an error if file doesn't meet requirements.
    * @param {Object} args
    * @param {Object} args.file File object.
    * @param {boolean} args.canTranscodeFile Whether file can be transcoded by consumer.
