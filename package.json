@@ -156,7 +156,7 @@
     "puppeteer": "^24.37.3",
     "react-compiler-runtime": "19.1.0-rc.3",
     "react-refresh": "^0.18.0",
-    "react-test-renderer": "^17.0.2",
+    "react-test-renderer": "^19.2.7",
     "rollup": "^2.80.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^3.0.2",
