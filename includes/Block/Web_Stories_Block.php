@@ -198,7 +198,7 @@ class Web_Stories_Block extends Embed_Base {
 				'view_type'          => $attributes['viewType']         ??= '',
 				'archive_link_label' => $attributes['archiveLinkLabel'] ??= __( 'View all stories', 'web-stories' ),
 				'circle_size'        => $attributes['circleSize']       ??= 96,
-				'image_alignment'    => $attributes['imageAlignment']   ??= 96,
+				'image_alignment'    => $attributes['imageAlignment']   ??= is_rtl() ? 'right' : 'left',
 				'number_of_columns'  => $attributes['numOfColumns']     ??= 2,
 			];
 
@@ -309,8 +309,8 @@ class Web_Stories_Block extends Embed_Base {
 						'default' => 96,
 					],
 					'imageAlignment'   => [
-						'type'    => 'number',
-						'default' => 96,
+						'type'    => 'string',
+						'default' => 'left',
 					],
 					'orderby'          => [
 						'type'    => 'string',
