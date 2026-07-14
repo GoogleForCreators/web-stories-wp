@@ -30,6 +30,6 @@
     "expect-puppeteer": "^11.0.0"
   },
   "devDependencies": {
-    "@percy/puppeteer": "^2.0.2"
+    "@percy/puppeteer": "^2.0.3"
   }
 }
