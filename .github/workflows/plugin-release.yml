@@ -41,7 +41,7 @@ jobs:
     environment: Production
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -104,7 +104,7 @@ jobs:
     needs: [checks]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -245,7 +245,7 @@ jobs:
       release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -269,7 +269,7 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -408,7 +408,7 @@ jobs:
     needs: [build]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -423,7 +423,7 @@ jobs:
 
       - name: Publish Release
         id: create_release
-        uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ env.release_name }}
@@ -444,7 +444,7 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -455,7 +455,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -500,7 +500,7 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
