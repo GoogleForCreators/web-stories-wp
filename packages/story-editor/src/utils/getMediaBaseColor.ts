@@ -41,7 +41,7 @@ async function extractColorFromImage(img: HTMLImageElement): Promise<string> {
       if (err instanceof Error) {
         void trackError('image_base_color', err.message);
       }
-      reject(err as Error);
+      reject(err instanceof Error ? err : new Error(String(err)));
     }
   });
 }

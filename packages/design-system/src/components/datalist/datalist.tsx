@@ -55,7 +55,7 @@ const Container = styled.div`
   flex-grow: 1;
 `;
 
-const Datalist = forwardRef(function Datalist<O extends AbstractOption>(
+const Datalist = forwardRef(function DatalistRender<O extends AbstractOption>(
   {
     onChange,
     disabled = false,

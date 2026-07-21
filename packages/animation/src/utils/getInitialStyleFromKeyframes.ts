@@ -58,7 +58,7 @@ function getInitialStyleFromKeyframes(keyframes: Keyframes) {
       if (Array.isArray(value)) {
         initialStyle[`--initial-${key}`] = value[0] as CSSProperty;
       } else {
-        initialStyle[`--initial-${key}`] = value as CSSProperty;
+        initialStyle[`--initial-${key}`] = value;
       }
     }
   });

@@ -84,12 +84,7 @@ prepatch, or prerelease. Only one version may be specified.`
       let newVersion: string | null = version || currentVersion;
 
       if (increment) {
-        newVersion = semverInc(
-          currentVersion,
-          increment,
-          undefined,
-          preid
-        ) as string;
+        newVersion = semverInc(currentVersion, increment, undefined, preid);
       }
 
       updateVersionNumbers(pluginFilePath, newVersion, nightly);

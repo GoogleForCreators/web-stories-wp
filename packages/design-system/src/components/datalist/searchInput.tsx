@@ -114,7 +114,7 @@ const Input = styled.input.attrs({
 
 const MAX_INPUT_SIZE = 35;
 
-const SearchInput = forwardRef(function SearchInput(
+const SearchInput = forwardRef(function SearchInputRender(
   {
     isExpanded,
     onClose,

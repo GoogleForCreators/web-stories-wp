@@ -26,7 +26,7 @@ import useNumericInput from './useNumericInput';
 import Input from './input';
 import type { NumericInputProps } from './types';
 
-const NumericInput = forwardRef(function NumericInput(
+const NumericInput = forwardRef(function NumericInputRender(
   {
     allowEmpty,
     isFloat,
