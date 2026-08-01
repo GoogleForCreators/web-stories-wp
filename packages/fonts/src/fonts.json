@@ -16883,6 +16883,39 @@
     }
   },
   {
+    "family": "Geomini",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1048,
+      "des": -152,
+      "tAsc": 1048,
+      "tDes": -152,
+      "tLGap": 0,
+      "wAsc": 1048,
+      "wDes": 199,
+      "xH": 582,
+      "capH": 730,
+      "yMin": -199,
+      "yMax": 929,
+      "hAsc": 1048,
+      "hDes": -152,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Georama",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -18977,6 +19010,31 @@
       "hAsc": 679,
       "hDes": -345,
       "lGap": 256
+    }
+  },
+  {
+    "family": "Hibur Mono",
+    "fallbacks": ["monospace"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1069,
+      "des": -293,
+      "tAsc": 1069,
+      "tDes": -293,
+      "tLGap": 0,
+      "wAsc": 1229,
+      "wDes": 389,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -245,
+      "yMax": 997,
+      "hAsc": 1069,
+      "hDes": -293,
+      "lGap": 0
     }
   },
   {
