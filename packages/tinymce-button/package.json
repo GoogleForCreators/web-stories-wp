@@ -25,8 +25,8 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/components": "^32.5.0",
-    "@wordpress/compose": "^7.22.0",
+    "@wordpress/components": "^37.0.0",
+    "@wordpress/compose": "^8.4.0",
     "@wordpress/data": "^10.22.0",
     "@wordpress/dom-ready": "^4.22.0",
     "@wordpress/element": "^6.32.0",
