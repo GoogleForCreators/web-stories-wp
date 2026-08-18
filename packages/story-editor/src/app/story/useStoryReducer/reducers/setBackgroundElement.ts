@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { elementIs, type Element } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -102,11 +102,7 @@ export const setBackgroundElement = (
 
     // Reorder elements and set element opacity to 100% because backgrounds
     // cannot be transparent.
-    page.elements = moveArrayElement(
-      page.elements,
-      currentPosition,
-      0
-    ) as unknown as Element[];
+    page.elements = moveArrayElement(page.elements, currentPosition, 0);
     page.elements.forEach((element) => {
       // Set isBackground for the element.
       if (element.id === elementId && elementIs.backgroundable(element)) {

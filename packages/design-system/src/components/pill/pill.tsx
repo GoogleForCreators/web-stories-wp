@@ -72,7 +72,7 @@ interface PillProps extends ComponentPropsWithoutRef<'button'> {
   pillStyleOverride?: string;
 }
 
-const Pill = forwardRef(function Pill(
+const Pill = forwardRef(function PillRender(
   {
     children,
     isActive,

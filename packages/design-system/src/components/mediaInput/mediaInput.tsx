@@ -180,7 +180,7 @@ interface MediaInputProps extends Omit<
   value: string;
 }
 
-const MediaInput = forwardRef(function MediaInput(
+const MediaInput = forwardRef(function MediaInputRender(
   {
     className,
     onBlur,

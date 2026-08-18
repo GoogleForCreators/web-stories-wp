@@ -24,7 +24,7 @@ import type { Page, Story } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import getSessionStorageKey from '../../../utils/getSessionStorageKey';
-import type { ReducerState, Capabilities, Restore } from '../../../types';
+import type { Capabilities, Restore } from '../../../types';
 
 interface UseLocalAutoSaveProps {
   restore: Restore;
@@ -54,7 +54,7 @@ function useLocalAutoSave({
       selection: [],
       capabilities,
       ...existingAutoSave,
-    } as Partial<ReducerState>);
+    });
   }, [restore, storyId, pages, capabilities, isNew]);
 
   return {

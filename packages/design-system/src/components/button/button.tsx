@@ -300,7 +300,7 @@ type Props = PropsWithChildren<{
   isToggled?: boolean;
 }>;
 
-const Button = forwardRef(function Button(
+const Button = forwardRef(function ButtonRender(
   {
     size = ButtonSize.Medium,
     type = ButtonType.Plain,
@@ -328,7 +328,7 @@ const Button = forwardRef(function Button(
   }
 });
 
-const ButtonAsLink = forwardRef(function ButtonAsLink(
+const ButtonAsLink = forwardRef(function ButtonAsLinkRender(
   {
     size = ButtonSize.Medium,
     type = ButtonType.Plain,

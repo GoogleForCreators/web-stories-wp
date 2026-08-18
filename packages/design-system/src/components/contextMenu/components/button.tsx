@@ -87,7 +87,7 @@ export interface MenuButtonProps extends ComponentPropsWithoutRef<
 /**
  * A styled button for use in the context menu.
  */
-const Button = forwardRef(function Button(
+const Button = forwardRef(function ButtonRender(
   {
     id,
     onBlur,

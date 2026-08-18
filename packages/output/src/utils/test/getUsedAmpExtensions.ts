@@ -19,7 +19,6 @@
  */
 import { ElementType } from '@googleforcreators/elements';
 import type {
-  BackgroundAudio,
   Page,
   ProductElement,
   VideoElement,
@@ -160,7 +159,7 @@ describe('getUsedAmpExtensions', () => {
             ],
           } as VideoElement,
         ],
-      } as Page,
+      },
     ];
 
     const actual = getUsedAmpExtensions(pages);
@@ -193,7 +192,7 @@ describe('getUsedAmpExtensions', () => {
               kind: 'captions',
             },
           ],
-        } as BackgroundAudio,
+        },
         elements: [],
       },
     ];

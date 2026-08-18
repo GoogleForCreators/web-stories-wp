@@ -20,14 +20,14 @@
  * External dependencies
  */
 import fs from 'fs';
-import puppeteer from 'puppeteer';
+import { launch } from 'puppeteer';
 
 const screenshotsPath = `build/template-posters/`;
 
 fs.mkdirSync(screenshotsPath, { recursive: true });
 
 (async () => {
-  const browser = await puppeteer.launch({
+  const browser = await launch({
     defaultViewport: null,
     headless: true,
     args: [`--window-size=1600,854`],
