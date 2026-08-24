@@ -62,7 +62,6 @@ describe('Web Stories Widget Block', () => {
     await expect(page).toClick('button span', { text: 'Web Stories' });
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
-    await expect(page).toClick('.web-stories-block-configuration-panel');
 
     await expect(page).toClick('button[aria-label="Embed a single story."]');
 
