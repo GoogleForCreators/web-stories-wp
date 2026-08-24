@@ -45,6 +45,7 @@ if ( $current_post instanceof WP_Post ) {
 			'web_stories_revision_for_' . $current_post->ID
 		)
 	) {
+		// @phpstan-ignore cast.string
 		$rev_id        = absint( sanitize_text_field( (string) wp_unslash( $_GET['rev_id'] ) ) );
 		$revision_post = get_post( $rev_id );
 
