@@ -174,7 +174,6 @@ describe('Stories Archive', () => {
         await expect(page).toClick('button span', { text: 'Web Stories' });
 
         await page.waitForSelector('.web-stories-block-configuration-panel');
-        await expect(page).toClick('.web-stories-block-configuration-panel');
 
         await expect(page).toClick('button', { text: 'Latest Stories' });
         await expect(page).toClick('button', { text: 'Box Carousel' });
