@@ -577,7 +577,8 @@ class Settings extends Service_Base implements PluginUninstallAware {
 			$default_schema = [
 				'type'        => empty( $args['type'] ) ? null : $args['type'],
 				'description' => empty( $args['description'] ) ? '' : $args['description'],
-				'default'     => $args['default'],
+				// @phpstan-ignore nullCoalesce.unnecessary (False positive)
+				'default'     => $args['default'] ?? null,
 			];
 
 			$schema = array_merge( $default_schema, $rest_args['schema'] );
