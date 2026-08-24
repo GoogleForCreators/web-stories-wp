@@ -368,7 +368,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 				'suppress_filters' => false,
 				'post_status'      => 'any',
 				'post_type'        => $this->get_slug(),
-				'posts_per_page'   => -1,
+				'posts_per_page'   => -1, // phpcs:ignore WordPressVIPMinimum.Performance.NoPaging.posts_per_page_posts_per_page -- We need to delete all posts.
 			]
 		);
 
