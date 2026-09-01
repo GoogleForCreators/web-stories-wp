@@ -34,7 +34,6 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\Service_Base;
 use WP_Site;
-use WP_Term;
 use WP_Term_Query;
 
 /**
@@ -98,11 +97,15 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
+	 *
+	 * @phpstan-var non-empty-string
 	 */
 	protected string $taxonomy_slug;
 
 	/**
 	 * Object type which the taxonomy should be associated.
+	 *
+	 * @phpstan-var non-empty-string
 	 */
 	protected string $taxonomy_post_type;
 
@@ -170,6 +173,8 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * Get taxonomy slug.
 	 *
 	 * @since 1.12.0
+	 *
+	 * @phpstan-return non-empty-string
 	 */
 	public function get_taxonomy_slug(): string {
 		return $this->taxonomy_slug;
@@ -192,14 +197,12 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 			]
 		);
 
-		if ( empty( $terms ) || ! \is_array( $terms ) ) {
+		if ( empty( $terms ) ) {
 			return;
 		}
 
 		foreach ( $terms as $term ) {
-			if ( $term instanceof WP_Term ) {
-				wp_delete_term( $term->term_id, $term->taxonomy );
-			}
+			wp_delete_term( $term->term_id, $this->get_taxonomy_slug() );
 		}
 	}
 

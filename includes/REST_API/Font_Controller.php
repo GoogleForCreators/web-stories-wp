@@ -58,6 +58,9 @@ use WP_REST_Server;
  *   default?: mixed,
  * }
  * @phpstan-type Schema array{
+ *   '$schema'?: string,
+ *   title: non-empty-string,
+ *   type: non-empty-string,
  *   properties: array{
  *     family?: SchemaEntry,
  *     fallbacks?: SchemaEntry,
