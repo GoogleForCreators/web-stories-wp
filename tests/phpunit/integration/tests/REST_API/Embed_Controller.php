@@ -378,7 +378,14 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$contributor );
 
-		$response = $this->dispatch_request( (string) get_permalink( $draft_story_id ) );
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $draft_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
 
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
@@ -400,7 +407,14 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$author );
 
-		$response = $this->dispatch_request( (string) get_permalink( $draft_story_id ) );
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $draft_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -432,7 +446,14 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$editor );
 
-		$response = $this->dispatch_request( (string) get_permalink( $protected_story_id ) );
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $protected_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
 
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
@@ -454,7 +475,14 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$contributor );
 
-		$response = $this->dispatch_request( (string) get_permalink( $private_story_id ) );
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $private_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
 
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
@@ -476,7 +504,14 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$author );
 
-		$response = $this->dispatch_request( (string) get_permalink( $private_story_id ) );
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $private_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -520,7 +555,13 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		);
 		$this->assertNotWPError( $draft_story_id );
 
-		$permalink = (string) get_permalink( $draft_story_id );
+		$permalink = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $draft_story_id,
+			],
+			get_home_url( $blog_id )
+		);
 
 		restore_current_blog();
 
