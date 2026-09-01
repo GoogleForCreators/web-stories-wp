@@ -42,10 +42,15 @@ use WP_REST_Response;
  *   default?: mixed,
  * }
  * @phpstan-type Schema array{
+ *   '$schema'?: string,
+ *   title: non-empty-string,
+ *   type: non-empty-string,
  *   properties: array{
  *     permalink_template?: SchemaEntry,
- *     generated_slug?: SchemaEntry
- *   }
+ *     generated_slug?: SchemaEntry,
+ *     ...
+ *   },
+ *   ...
  * }
  */
 class Page_Template_Controller extends Stories_Base_Controller {

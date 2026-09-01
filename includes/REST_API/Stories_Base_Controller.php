@@ -57,10 +57,15 @@ use WP_REST_Response;
  *   default?: mixed,
  * }
  * @phpstan-type Schema array{
+ *   '$schema'?: string,
+ *   title: non-empty-string,
+ *   type: non-empty-string,
  *   properties: array{
  *     content?: SchemaEntry,
- *     story_data?: SchemaEntry
- *   }
+ *     story_data?: SchemaEntry,
+ *     ...
+ *   },
+ *   ...
  * }
  * @phpstan-type RegisteredMetadata array{
  *   type: string,

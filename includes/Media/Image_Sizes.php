@@ -101,7 +101,7 @@ class Image_Sizes extends Service_Base {
 		} elseif ( ! empty( $response['media_details']['sizes'] ) ) {
 			foreach ( $response['media_details']['sizes'] as $size => &$size_data ) {
 
-				if ( isset( $size_data['mime-type'] ) ) {
+				if ( isset( $size_data['mime-type'] ) ) { // @phpstan-ignore isset.offset
 					$size_data['mime_type'] = $size_data['mime-type'];
 					unset( $size_data['mime-type'] );
 				}
