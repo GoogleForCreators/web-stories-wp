@@ -62,7 +62,7 @@ export interface MenuItemProps extends ComponentPropsWithoutRef<
   className?: string;
 }
 
-const MenuItem = forwardRef(function MenuItem(
+const MenuItem = forwardRef(function MenuItemRender(
   {
     label,
     shortcut,

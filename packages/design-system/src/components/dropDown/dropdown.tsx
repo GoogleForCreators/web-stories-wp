@@ -39,7 +39,7 @@ import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 import type { DropDownProps } from './types';
 
-const DropDown = forwardRef(function DropDown(
+const DropDown = forwardRef(function DropDownRender(
   {
     ariaLabel,
     disabled,

@@ -87,11 +87,7 @@ function useKeyEffectInternal(
       const mousetrap = getOrCreateMousetrap(
         nodeEl as HTMLElementWithMouseTrap
       );
-      const handler = createKeyHandler(
-        nodeEl as HTMLElement,
-        keySpec,
-        batchingCallback
-      );
+      const handler = createKeyHandler(nodeEl, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key, type);

@@ -132,7 +132,7 @@ describe('getPreloadResources', () => {
         elements: [
           { ...VIDEO_ELEMENT, isBackground: true } as BackgroundableElement,
         ],
-      } as Page,
+      },
     ];
     const result = getPreloadResources(pages);
     expect(result).toStrictEqual([
@@ -151,7 +151,7 @@ describe('getPreloadResources', () => {
         elements: [
           { ...IMAGE_ELEMENT, isBackground: true } as BackgroundableElement,
         ],
-      } as Page,
+      },
     ];
     const result = getPreloadResources(pages);
     expect(result).toStrictEqual([
