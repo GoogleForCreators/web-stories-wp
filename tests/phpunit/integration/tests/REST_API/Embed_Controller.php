@@ -38,7 +38,12 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	protected static int $story_id;
+	protected static int $draft_story_id;
+	protected static int $protected_story_id;
+	protected static int $private_story_id;
 	protected static int $subscriber;
+	protected static int $contributor;
+	protected static int $author;
 	protected static int $editor;
 	protected static int $admin;
 
@@ -53,18 +58,28 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	private \Google\Web_Stories\REST_API\Embed_Controller $controller;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
-		self::$subscriber = $factory->user->create(
+		self::$subscriber  = $factory->user->create(
 			[
 				'role' => 'subscriber',
 			]
 		);
-		self::$editor     = $factory->user->create(
+		self::$contributor = $factory->user->create(
+			[
+				'role' => 'contributor',
+			]
+		);
+		self::$author      = $factory->user->create(
+			[
+				'role' => 'author',
+			]
+		);
+		self::$editor      = $factory->user->create(
 			[
 				'role'       => 'editor',
 				'user_email' => 'editor@example.com',
 			]
 		);
-		self::$admin      = $factory->user->create(
+		self::$admin       = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
@@ -73,12 +88,43 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
-		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$story_content  = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
+				'post_content' => $story_content,
+			]
+		);
+
+		self::$draft_story_id = $factory->post->create(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Draft Story',
+				'post_status'  => 'draft',
+				'post_author'  => self::$author,
+				'post_content' => $story_content,
+			]
+		);
+
+		self::$protected_story_id = $factory->post->create(
+			[
+				'post_type'     => Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'    => 'Protected Story',
+				'post_status'   => 'publish',
+				'post_password' => 'secret',
+				'post_author'   => self::$admin,
+				'post_content'  => $story_content,
+			]
+		);
+
+		self::$private_story_id = $factory->post->create(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Private Story',
+				'post_status'  => 'private',
+				'post_author'  => self::$author,
 				'post_content' => $story_content,
 			]
 		);
@@ -347,6 +393,160 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	public function test_local_url_draft_without_permission(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$contributor );
+
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => self::$draft_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
+
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
+	}
+
+	public function test_local_url_draft_with_permission(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$author );
+
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => self::$draft_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'  => '',
+			'poster' => 'https:/example.com/poster.png',
+		];
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertIsArray( $data );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	public function test_local_url_password_protected(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => self::$protected_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
+
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
+	}
+
+	public function test_local_url_private_story_without_permission(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$contributor );
+
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => self::$private_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
+
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
+	}
+
+	public function test_local_url_private_story_with_permission(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$author );
+
+		$url      = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => self::$private_story_id,
+			],
+			home_url()
+		);
+		$response = $this->dispatch_request( $url );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'  => '',
+			'poster' => 'https:/example.com/poster.png',
+		];
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertIsArray( $data );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @group ms-required
+	 */
+	public function test_local_url_multisite_draft_without_permission(): void {
+		$this->controller->register();
+
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
+		$story_post_type->register();
+
+		$blog_id = self::factory()->blog->create();
+		$this->assertNotWPError( $blog_id );
+
+		$user_id = self::factory()->user->create( [ 'role' => 'editor' ] );
+		$this->assertNotWPError( $user_id );
+		wp_set_current_user( $user_id );
+
+		switch_to_blog( $blog_id );
+
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+
+		$story_content  = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$draft_story_id = self::factory()->post->create(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Draft Story',
+				'post_status'  => 'draft',
+				'post_author'  => self::$admin,
+				'post_content' => $story_content,
+			]
+		);
+		$this->assertNotWPError( $draft_story_id );
+
+		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+
+		$permalink = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'p'         => $draft_story_id,
+			],
+			get_home_url( $blog_id )
+		);
+
+		restore_current_blog();
+
+		$response = $this->dispatch_request( $permalink );
+
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
 	protected function dispatch_request( ?string $url = null ): WP_REST_Response {

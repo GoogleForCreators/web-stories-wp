@@ -352,13 +352,33 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @return array{title: string, poster: string}|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( string $url ) {
+		$switched_blog = $this->maybe_switch_site( $url );
+
 		$post = $this->url_to_post( $url );
 
-		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
+		if ( ! $post instanceof WP_Post || $this->story_post_type->get_slug() !== $post->post_type ) {
+			if ( $switched_blog ) {
+				restore_current_blog();
+			}
+
 			return false;
 		}
 
-		return $this->get_data_from_document( $post->post_content );
+		if ( ( ! is_post_publicly_viewable( $post ) && ! current_user_can( 'read_post', $post->ID ) ) || post_password_required( $post ) ) {
+			if ( $switched_blog ) {
+				restore_current_blog();
+			}
+
+			return false;
+		}
+
+		$data = $this->get_data_from_document( $post->post_content );
+
+		if ( $switched_blog ) {
+			restore_current_blog();
+		}
+
+		return $data;
 	}
 
 	/**
@@ -376,10 +396,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $url Permalink to check.
 	 * @return WP_Post|null Post object on success, null otherwise.
 	 */
-	private function url_to_post( $url ): ?WP_Post {
-		$post          = null;
-		$switched_blog = $this->maybe_switch_site( $url );
-
+	private function url_to_post( string $url ): ?WP_Post {
+		$post = null;
 
 		if ( \function_exists( 'wpcom_vip_url_to_postid' ) ) {
 			$post_id = wpcom_vip_url_to_postid( $url );
@@ -419,11 +437,11 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			if ( $url_host && $home_url_host && $url_host === $home_url_host ) {
 				$values = [];
 				if (
-				preg_match(
-					'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
-					$url,
-					$values
-				)
+					preg_match(
+						'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
+						$url,
+						$values
+					)
 				) {
 					$slug = $values[2];
 
@@ -435,10 +453,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 					}
 				}
 			}
-		}
-
-		if ( $switched_blog ) {
-			restore_current_blog();
 		}
 
 		if ( ! $post instanceof WP_Post ) {
