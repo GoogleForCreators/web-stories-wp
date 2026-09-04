@@ -78,6 +78,10 @@ jobs:
             wp: 'trunk'
             experimental: true
 
+          - php: '8.6'
+            wp: 'trunk'
+            experimental: true
+
           - php: 'nightly'
             wp: 'trunk'
             experimental: true
