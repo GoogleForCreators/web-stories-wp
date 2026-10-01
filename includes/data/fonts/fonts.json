@@ -626,8 +626,8 @@
       "tLGap": 0,
       "wAsc": 990,
       "wDes": 390,
-      "xH": 500,
-      "capH": 700,
+      "xH": 505,
+      "capH": 705,
       "yMin": -317,
       "yMax": 991,
       "hAsc": 990,
@@ -10313,6 +10313,50 @@
       "yMax": 945,
       "hAsc": 976,
       "hDes": -372,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Clarity City",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 994,
+      "des": -306,
+      "tAsc": 994,
+      "tDes": -306,
+      "tLGap": 0,
+      "wAsc": 965,
+      "wDes": 277,
+      "xH": 517,
+      "capH": 687,
+      "yMin": -235,
+      "yMax": 965,
+      "hAsc": 994,
+      "hDes": -306,
       "lGap": 0
     }
   },
@@ -21051,6 +21095,31 @@
     }
   },
   {
+    "family": "Isometra",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1050,
+      "des": -250,
+      "tAsc": 1050,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1092,
+      "wDes": 420,
+      "xH": 600,
+      "capH": 800,
+      "yMin": -420,
+      "yMax": 1032,
+      "hAsc": 1050,
+      "hDes": -250,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Istok Web",
     "fallbacks": ["sans-serif"],
     "weights": [400, 700],
@@ -23692,6 +23761,41 @@
     }
   },
   {
+    "family": "Kripa",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1080,
+      "des": -390,
+      "tAsc": 1080,
+      "tDes": -390,
+      "tLGap": 0,
+      "wAsc": 1290,
+      "wDes": 480,
+      "xH": 546,
+      "capH": 725,
+      "yMin": -374,
+      "yMax": 1075,
+      "hAsc": 1080,
+      "hDes": -390,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Kristi",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -25181,6 +25285,40 @@
       "yMax": 1146,
       "hAsc": 924,
       "hDes": -326,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Libre Caslon Condensed",
+    "fallbacks": ["serif"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 2061,
+      "des": -539,
+      "tAsc": 2061,
+      "tDes": -539,
+      "tLGap": 0,
+      "wAsc": 1955,
+      "wDes": 615,
+      "xH": 1049,
+      "capH": 1523,
+      "yMin": -529,
+      "yMax": 1921,
+      "hAsc": 2061,
+      "hDes": -539,
       "lGap": 0
     }
   },
@@ -31105,7 +31243,7 @@
       "xH": 512,
       "capH": 717,
       "yMin": -250,
-      "yMax": 950,
+      "yMax": 952,
       "hAsc": 950,
       "hDes": -250,
       "lGap": 0
