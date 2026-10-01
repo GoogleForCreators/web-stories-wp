@@ -49,7 +49,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -113,7 +113,7 @@ jobs:
           DISABLE_ERROR_BOUNDARIES: true
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
         with:
           files: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
