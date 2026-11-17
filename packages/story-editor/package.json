@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@ap.cx/hues": "^2.4.0",
-    "@ffmpeg/core": "^0.11.0",
-    "@ffmpeg/ffmpeg": "^0.11.6",
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
@@ -71,9 +71,9 @@
     "classnames": "^2.5.1",
     "flagged": "^2.0.10",
     "history": "^5.3.0",
-    "html-to-image": "1.10.8",
+    "html-to-image": "1.11.13",
     "immer": "^10.1.1",
-    "mediainfo.js": "^0.1.9",
+    "mediainfo.js": "^0.3.8",
     "polished": "^4.3.1",
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.3.0",
@@ -85,7 +85,7 @@
     "sat": "^0.9.0",
     "styled-components": "^5.3.11",
     "stylis-plugin-rtl": "^1.0.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.3"
   },
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
