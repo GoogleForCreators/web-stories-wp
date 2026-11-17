@@ -35,6 +35,13 @@ updates:
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
+      eslint:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+          - '@eslint-community/*'
+        exclude-patterns:
+          - 'eslint-plugin-oxlint'
       babel:
         patterns:
           - 'babel-*'
@@ -49,6 +56,73 @@ updates:
         patterns:
           - '*-react-compiler'
           - 'react-compiler-*'
+      stylelint:
+        patterns:
+          - 'stylelint'
+          - 'stylelint-*'
+          - '@stylelint/*'
+          - 'postcss-*'
+          - 'cssnano'
+      prettier:
+        patterns:
+          - 'prettier'
+          - '@prettier/*'
+      webpack:
+        patterns:
+          - 'webpack*'
+          - '*-webpack-plugin'
+          - '@pmmmwh/react-refresh-webpack-plugin'
+          - 'mini-css-extract-plugin'
+          - 'circular-dependency-plugin'
+          - '*-loader'
+          - '@jsdevtools/coverage-istanbul-loader'
+          - '@svgr/webpack'
+        exclude-patterns:
+          - 'babel-loader'
+          - 'karma-sourcemap-loader'
+          - 'rollup-plugin-web-worker-loader'
+      rollup:
+        patterns:
+          - 'rollup'
+          - 'rollup-*'
+          - '@rollup/*'
+          - '@svgr/rollup'
+      jest:
+        patterns:
+          - 'jest'
+          - 'jest-*'
+          - '@jest/*'
+          - 'expect-puppeteer'
+      testing-library:
+        patterns:
+          - '@testing-library/*'
+      karma:
+        patterns:
+          - 'karma'
+          - 'karma-*'
+      puppeteer:
+        patterns:
+          - 'puppeteer'
+          - '@percy/puppeteer'
+      types:
+        patterns:
+          - '@types/*'
+      development-dependencies:
+        dependency-type: development
+        update-types:
+          - 'minor'
+          - 'patch'
+      production-dependencies:
+        dependency-type: production
+        update-types:
+          - 'minor'
+          - 'patch'
+        exclude-patterns:
+          - '@wordpress/element'
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
     ignore:
       # styled-components is not yet compatible.
       - dependency-name: 'stylis-plugin-rtl'
@@ -102,5 +176,39 @@ updates:
     labels:
       - Dependencies
       - PHP
+    groups:
+      phpstan:
+        patterns:
+          - 'phpstan/*'
+          - 'swissspidy/phpstan-no-private'
+          - 'szepeviktor/phpstan-wordpress'
+          - 'php-stubs/*'
+      phpcs:
+        patterns:
+          - 'automattic/vipwpcs'
+          - 'dealerdirect/phpcodesniffer-composer-installer'
+          - 'phpcompatibility/*'
+          - 'sirbrillig/phpcs-variable-analysis'
+          - 'slevomat/coding-standard'
+          - 'squizlabs/php_codesniffer'
+          - 'wp-coding-standards/wpcs'
+      php-scoper:
+        patterns:
+          - 'humbug/php-scoper'
+          - 'sniccowp/php-scoper-wordpress-excludes'
+      development-dependencies:
+        dependency-type: development
+        update-types:
+          - 'minor'
+          - 'patch'
+      production-dependencies:
+        dependency-type: production
+        update-types:
+          - 'minor'
+          - 'patch'
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
     cooldown:
       default-days: 7
