@@ -29,7 +29,6 @@
     "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan-deprecation-rules": "^2.0.1",
     "phpstan/phpstan-phpunit": "^2.0.1",
-    "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
     "sniccowp/php-scoper-wordpress-excludes": "^7.0",
@@ -73,6 +72,9 @@
       "ergebnis/composer-normalize": true,
       "mcaskill/composer-exclude-files": true,
       "phpstan/extension-installer": true
+    },
+    "audit": {
+      "block-insecure": true
     },
     "discard-changes": true,
     "platform": {
