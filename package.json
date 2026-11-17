@@ -150,7 +150,7 @@
     "oxlint": "^1.48.0",
     "patch-package": "^8.0.1",
     "postcss-jsx": "^0.36.4",
-    "postcss-styled-syntax": "^0.7.1",
+    "postcss-styled-syntax": "^0.7.4",
     "postcss-syntax": "^0.36.2",
     "prettier": "^3.8.1",
     "puppeteer": "^24.37.3",
