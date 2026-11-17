@@ -83,7 +83,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @phpstan-param WP_REST_Request<covariant array{context: string, web_stories_demo?: bool}> $request
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$context = $request->get_param( 'context' );
+		$context = ! empty( $context ) ? $context : 'view';
 
 		if ( 'auto-draft' === $post->post_status && wp_validate_boolean( $request['web_stories_demo'] ) ) {
 			$demo         = new Demo_Content();

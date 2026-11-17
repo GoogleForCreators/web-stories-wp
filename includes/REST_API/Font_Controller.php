@@ -151,7 +151,35 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				array_push( $fonts, ...$this->get_builtin_fonts() );
 
 				// For custom fonts the searching will be done in WP_Query already.
-				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
+				if ( isset( $registered['search'], $request['search'] ) ) {
+					$search = $request->get_param( 'search' );
+					if ( ! empty( $search ) ) {
+						$fonts = array_values(
+							array_filter(
+								$fonts,
+								/**
+								 * Font data.
+								 *
+								 * @param array{family: string} $font
+								 * @return bool
+								 */
+								static fn( array $font ) => false !== stripos( $font['family'], $search )
+							)
+						);
+					}
+				}
+			}
+
+			if ( 'all' === $request['service'] || 'custom' === $request['service'] ) {
+				array_push( $fonts, ...$this->get_custom_fonts( $request ) );
+			}
+
+			// Filter before doing any sorting.
+			if ( isset( $registered['include'], $request['include'] ) ) {
+				$include = $request->get_param( 'include' );
+				if ( ! empty( $include ) ) {
+					$include_list = array_map( 'strtolower', $include );
+
 					$fonts = array_values(
 						array_filter(
 							$fonts,
@@ -161,32 +189,10 @@ class Font_Controller extends WP_REST_Posts_Controller {
 							 * @param array{family: string} $font
 							 * @return bool
 							 */
-							static fn( array $font ) => false !== stripos( $font['family'], $request['search'] )
+							static fn( array $font ): bool => \in_array( strtolower( $font['family'] ), $include_list, true )
 						)
 					);
 				}
-			}
-
-			if ( 'all' === $request['service'] || 'custom' === $request['service'] ) {
-				array_push( $fonts, ...$this->get_custom_fonts( $request ) );
-			}
-
-			// Filter before doing any sorting.
-			if ( isset( $registered['include'], $request['include'] ) && ! empty( $request['include'] ) ) {
-				$include_list = array_map( 'strtolower', $request['include'] );
-
-				$fonts = array_values(
-					array_filter(
-						$fonts,
-						/**
-						 * Font data.
-						 *
-						 * @param array{family: string} $font
-						 * @return bool
-						 */
-						static fn( array $font ): bool => \in_array( strtolower( $font['family'] ), $include_list, true )
-					)
-				);
 			}
 
 			if ( 'all' === $request['service'] ) {
