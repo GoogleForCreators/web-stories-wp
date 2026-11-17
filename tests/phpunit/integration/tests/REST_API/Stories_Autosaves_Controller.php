@@ -55,6 +55,14 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 		$sanitized_content      = trim( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_sanitized.html' ) );
 
+		if ( LIBXML_VERSION >= 21500 ) {
+			$sanitized_content = str_replace(
+				'style=\'white-space:pre-wrap;margin:0;font-family:"Roboto","Helvetica Neue","Helvetica",sans-serif;font-size:0.212121em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000\'',
+				'style="white-space:pre-wrap;margin:0;font-family:&quot;Roboto&quot;,&quot;Helvetica Neue&quot;,&quot;Helvetica&quot;,sans-serif;font-size:0.212121em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000"',
+				$sanitized_content
+			);
+		}
+
 		$story = self::factory()->post->create(
 			[
 				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
