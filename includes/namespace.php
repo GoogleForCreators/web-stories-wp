@@ -91,7 +91,11 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  * @param WP_Error    $error Unused.
  * @param int|WP_Site $site Site ID or object.
  */
-function remove_site( WP_Error $error, $site ): void {
+function remove_site(
+	// @phpstan-ignore function.unusedParameter
+	WP_Error $error,
+	$site
+): void {
 	if ( ! is_multisite() ) {
 		return;
 	}

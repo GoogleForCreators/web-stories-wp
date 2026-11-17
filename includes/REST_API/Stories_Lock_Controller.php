@@ -327,7 +327,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			}
 		}
 
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$context = $request->get_param( 'context' );
+		$context = ! empty( $context ) ? $context : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
@@ -339,8 +340,9 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$response = rest_ensure_response( $data );
 
 		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
-			if ( $request['id'] ) {
-				$response->add_links( $this->prepare_links( $item, $request['id'] ) );
+			$post_id = $request->get_param( 'id' );
+			if ( $post_id ) {
+				$response->add_links( $this->prepare_links( $item, $post_id ) );
 			}
 		}
 

@@ -144,7 +144,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$data['story_data'] = post_password_required( $post ) ? (object) [] : rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$context = $request->get_param( 'context' );
+		$context = ! empty( $context ) ? $context : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
 
