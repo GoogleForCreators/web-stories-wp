@@ -11,6 +11,8 @@ updates:
       github-actions:
         patterns:
           - '*'
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: npm
     directory: '/'
@@ -89,6 +91,8 @@ updates:
       - dependency-name: 'eslint'
         versions:
           - '>= 9'
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: composer
     directory: '/'
@@ -98,3 +102,5 @@ updates:
     labels:
       - Dependencies
       - PHP
+    cooldown:
+      default-days: 7
