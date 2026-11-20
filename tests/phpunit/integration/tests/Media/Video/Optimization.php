@@ -85,6 +85,8 @@ class Optimization extends TestCase {
 	 * @covers ::on_plugin_uninstall
 	 */
 	public function test_on_plugin_uninstall(): void {
+		$this->instance->register_meta();
+
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -109,6 +111,6 @@ class Optimization extends TestCase {
 
 		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
 		$this->instance->on_plugin_uninstall();
-		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
+		$this->assertSame( 0, get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
 	}
 }
