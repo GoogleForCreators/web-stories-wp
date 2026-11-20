@@ -71,9 +71,8 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
 
-		if ( isset( $registered['type'] ) && ! empty( $request['type'] ) ) {
-			$type = $request['type'];
-
+		$type = $request->get_param( 'type' );
+		if ( isset( $registered['type'] ) && ! empty( $type ) ) {
 			$taxonomies = get_object_taxonomies( $type, 'objects' );
 		} else {
 			$taxonomies = get_taxonomies( [], 'objects' );

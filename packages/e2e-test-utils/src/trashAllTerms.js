@@ -33,7 +33,10 @@ async function trashAllTerms(taxonomy) {
   await visitAdminPage('edit-tags.php', `taxonomy=${taxonomy}`);
 
   // If this selector doesn't exist there are no terms for us to delete.
-  const bulkSelector = await page.$('#bulk-action-selector-top');
+  // The .hidden class is a new addition in WP 7.1, see http://core.trac.wordpress.org/ticket/63372.
+  const bulkSelector = await page.$(
+    '.bulkactions:not(.hidden) #bulk-action-selector-top'
+  );
   if (bulkSelector) {
     await page.waitForSelector('[id^=cb-select-all-]');
     await page.click('[id^=cb-select-all-]');

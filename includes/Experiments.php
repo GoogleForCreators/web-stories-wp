@@ -149,7 +149,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				[ $this, 'display_experiment_field' ],
 				self::PAGE_NAME,
 				$experiment['group'],
-				// @phpstan-ignore argument.type
 				[
 					'label'   => $experiment['description'],
 					'id'      => $experiment['name'],

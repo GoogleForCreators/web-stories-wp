@@ -195,11 +195,11 @@ class Web_Stories_Block extends Embed_Base {
 
 			$story_attributes = [
 				'align'              => $attributes['align'],
-				'view_type'          => $attributes['viewType']         ??= '',
-				'archive_link_label' => $attributes['archiveLinkLabel'] ??= __( 'View all stories', 'web-stories' ),
-				'circle_size'        => $attributes['circleSize']       ??= 96,
-				'image_alignment'    => $attributes['imageAlignment']   ??= is_rtl() ? 'right' : 'left',
-				'number_of_columns'  => $attributes['numOfColumns']     ??= 2,
+				'view_type'          => $attributes['viewType'] ?? '',
+				'archive_link_label' => $attributes['archiveLinkLabel'] ?? __( 'View all stories', 'web-stories' ),
+				'circle_size'        => $attributes['circleSize'] ?? 96,
+				'image_alignment'    => $attributes['imageAlignment'] ?? ( is_rtl() ? 'right' : 'left' ),
+				'number_of_columns'  => $attributes['numOfColumns'] ?? 2,
 			];
 
 			/**

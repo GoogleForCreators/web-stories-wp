@@ -179,7 +179,7 @@ class Story {
 				$this->poster_portrait_size      = [ (int) $width, (int) $height ];
 
 				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
-				if ( $image_meta ) {
+				if ( ! empty( $image_meta['width'] ) && ! empty( $image_meta['height'] ) ) {
 					$size_array          = [ $image_meta['width'], $image_meta['height'] ];
 					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
 					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );

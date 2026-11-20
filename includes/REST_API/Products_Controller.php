@@ -190,11 +190,16 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-		$orderby     = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
-		$page        = ! empty( $request['page'] ) ? $request['page'] : 1;
-		$per_page    = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
-		$order       = ! empty( $request['order'] ) ? $request['order'] : 'desc';
+		$search_term = $request->get_param( 'search' );
+		$search_term = ! empty( $search_term ) ? $search_term : '';
+		$orderby     = $request->get_param( 'orderby' );
+		$orderby     = ! empty( $orderby ) ? $orderby : 'date';
+		$page        = $request->get_param( 'page' );
+		$page        = ! empty( $page ) ? $page : 1;
+		$per_page    = $request->get_param( 'per_page' );
+		$per_page    = ! empty( $per_page ) ? $per_page : 100;
+		$order       = $request->get_param( 'order' );
+		$order       = ! empty( $order ) ? $order : 'desc';
 
 		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
@@ -217,7 +222,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$response->header( 'X-WP-HasNextPage', $query_result['has_next_page'] ? 'true' : 'false' );
 
 		if ( $request['_web_stories_envelope'] ) {
-			$embed    = $request['_embed'] ?? false;
+			$embed    = $request->get_param( '_embed' ) ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
@@ -308,7 +313,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$context = $request->get_param( 'context' );
+		$context = ! empty( $context ) ? $context : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 

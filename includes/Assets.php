@@ -33,10 +33,10 @@ namespace Google\Web_Stories;
  *
  * @phpstan-type AssetMetadata array{
  *   version: string,
- *   dependencies: string[],
- *   js: string[],
- *   css: string[],
- *   chunks: string[],
+ *   dependencies: list<non-empty-string>,
+ *   js: list<non-empty-string>,
+ *   css: list<non-empty-string>,
+ *   chunks: list<non-empty-string>,
  * }
  */
 class Assets {
@@ -84,6 +84,7 @@ class Assets {
 	 * @param string $handle Script handle.
 	 * @return array Array containing combined contents of "<$handle>.asset.php" and "<$handle>.chunks.php".
 	 *
+	 * @phpstan-param non-empty-string $handle
 	 * @phpstan-return AssetMetadata
 	 */
 	public function get_asset_metadata( string $handle ): array {
@@ -120,6 +121,9 @@ class Assets {
 	 * @param string   $script_handle Handle of script.
 	 * @param string[] $script_dependencies Array of extra dependencies.
 	 * @param bool     $with_i18n Optional. Whether to setup i18n for this asset. Default true.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $script_dependencies
 	 */
 	public function register_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		if ( isset( $this->register_scripts[ $script_handle ] ) ) {
@@ -188,6 +192,9 @@ class Assets {
 	 * @param string   $script_handle Handle of script.
 	 * @param string[] $script_dependencies Array of extra dependencies.
 	 * @param bool     $with_i18n Optional. Whether to setup i18n for this asset. Default true.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $script_dependencies
 	 */
 	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		$this->register_script_asset( $script_handle, $script_dependencies, $with_i18n );
@@ -201,6 +208,9 @@ class Assets {
 	 *
 	 * @param string   $style_handle Handle of style.
 	 * @param string[] $style_dependencies Array of extra dependencies.
+	 *
+	 * @phpstan-param non-empty-string $style_handle
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $style_dependencies
 	 */
 	public function register_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		if ( isset( $this->register_styles[ $style_handle ] ) ) {
@@ -246,6 +256,9 @@ class Assets {
 	 *
 	 * @param string   $style_handle Handle of style.
 	 * @param string[] $style_dependencies Array of extra dependencies.
+	 *
+	 * @phpstan-param non-empty-string $style_handle
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $style_dependencies
 	 */
 	public function enqueue_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		$this->register_style_asset( $style_handle, $style_dependencies );
@@ -299,6 +312,10 @@ class Assets {
 	 *                                    Default 'false'.
 	 * @param bool             $with_i18n Optional. Whether to setup i18n for this asset. Default true.
 	 * @return bool Whether the script has been registered. True on success, false on failure.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
+	 * @phpstan-param non-empty-string|false $src
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $deps
 	 */
 	public function register_script( string $script_handle, $src, array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = true ): bool {
 		if ( ! isset( $this->register_scripts[ $script_handle ] ) ) {
@@ -362,9 +379,12 @@ class Assets {
 	 * @param bool             $in_footer Optional. Whether to enqueue the script before </body> instead of in the <head>.
 	 *                                    Default 'false'.
 	 * @param bool             $with_i18n Optional. Whether to setup i18n for this asset. Default true.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $deps
 	 */
 	public function enqueue_script( string $script_handle, string $src = '', array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = false ): void {
-		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer, $with_i18n );
+		$this->register_script( $script_handle, $src ?: false, $deps, $ver, $in_footer, $with_i18n );
 		wp_enqueue_script( $script_handle, $src, $deps, $ver, $in_footer );
 	}
 
@@ -377,6 +397,8 @@ class Assets {
 	 *
 	 * @param string $script_handle Name of the script module. Should be unique.
 	 * @param string $src           Full URL of the script module.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
 	 */
 	public function enqueue_script_module( string $script_handle, string $src ): void {
 		$asset = $this->get_asset_metadata( $script_handle );
@@ -384,7 +406,7 @@ class Assets {
 		wp_enqueue_script_module(
 			$script_handle,
 			$src,
-			$asset['dependencies'], // @phpstan-ignore argument.type
+			$asset['dependencies'],
 			$asset['version'],
 		);
 	}
@@ -395,6 +417,8 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string[] $styles Array of styles to be removed.
+	 *
+	 * @phpstan-param list<non-empty-string>|array<non-empty-string> $styles
 	 */
 	public function remove_admin_style( array $styles ): void {
 		wp_styles()->registered['wp-admin']->deps = array_diff( wp_styles()->registered['wp-admin']->deps, $styles );
@@ -407,6 +431,8 @@ class Assets {
 	 *
 	 * @param string $script_handle Name of the script. Should be unique.
 	 * @return array<int, mixed> Script translations.
+	 *
+	 * @phpstan-param non-empty-string $script_handle
 	 */
 	public function get_translations( string $script_handle ): array {
 		/**

@@ -120,7 +120,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$response = parent::get_items( $request );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
-			$embed    = $request['_embed'] ?? false;
+			$embed    = $request->get_param( '_embed' ) ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
