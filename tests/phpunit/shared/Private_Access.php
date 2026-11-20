@@ -53,7 +53,7 @@ trait Private_Access {
 		if ( PHP_VERSION_ID < 80100 ) {
 			$method->setAccessible( true );
 		}
-		return $method->invokeArgs( $callback[0], $args );
+		return $method->invokeArgs( $method->isStatic() ? null : $callback[0], $args );
 	}
 
 	/**
@@ -113,7 +113,7 @@ trait Private_Access {
 		if ( PHP_VERSION_ID < 80100 ) {
 			$property->setAccessible( true );
 		}
-		return $property->getValue( $instance );
+		return $property->getValue( $property->isStatic() ? null : $instance );
 	}
 
 	/**
